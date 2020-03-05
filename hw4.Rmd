@@ -1,0 +1,257 @@
+---
+title: "ESM 260: Applied Marine Ecology"
+subtitle: "Problem Set 4"
+author: "Chase Brewster"
+date: "3/03/2020"
+header-includes:
+    - \usepackage{setspace}\doublespacing
+    - \usepackage{fontspec}
+    - \setmainfont{Calibri Light}
+output: 
+  html_document: default
+  latex_engine: xelatex
+---
+
+#Load Packages & Read in Data
+```{r packages & data, warning=FALSE, message=FALSE}
+
+library(tidyverse)
+library(wesanderson)
+
+climate <- read_csv("climate.csv")
+crab <- read_csv("crab.csv")
+nuclear <- read_csv("nuclear.csv")
+upwell <- read_csv("upwell.csv")
+
+```
+***
+
+#1. Climate Change
+
+First, there is growing pressure in Congress to relax environmental regulations affecting carbon dioxide
+emissions. You have been asked to provide evidence for changes in marine communities that may be due to
+climatic changes, such as increases in temperature. Your have data from a coastal site in Northern California
+that had been previously surveyed in 1955. During the ensuing 65 years there have been substantial changes in
+the abundances of several species. To help interpret the changes, you can look at the following information for
+all species: 1) the mode of development (i.e., planktonic larvae vs. non-planktonic larvae), 2) the geographic
+range (i.e., does the species range occur primarily North or South of the site, or is it Cosmopolitan - both north
+and south), and 3) the trophic level (i.e., predator, filter feeder, scavenger). What are the patterns of change?
+Try grouping the species by categories and see if anything emerges.
+```{r climate change explore}
+
+##going to start by filtering for different qualities of the species and see if anything emerges
+
+climate_explore <- climate %>% 
+  filter(trophic == "scavenger")
+
+##going to run a linear model to see if any species category is significant
+
+climate_lm <- lm(density ~ development+range+trophic, data = climate)
+
+summary(climate_lm)
+
+```
+
+- there does not seem to be any patterns in planktonic vs. non-planktonic
+
+- Northern species have all decreased in density (significant)
+- Southern species have all increased in density (significant)
+- there is no pattern for cosmopolitan
+
+- there does not seem to be a pattern for predators
+- there does not seem to be a pattern for filter feeders
+- there does not seem to be a pattern for scavengers (all but 1 increase, but they are all southern & cosmo)
+
+```{r, climate change graph}
+
+##Now going to make graphs for each species category
+
+climate_graph_range <- ggplot(climate, aes(x = species, y = density)) +
+  geom_col() + 
+  facet_wrap(~range) +
+  theme_light()
+
+climate_graph_range
+
+climate_graph_development <- ggplot(climate, aes(x = species, y = density)) +
+  geom_col() + 
+  facet_wrap(~development) +
+  theme_light()
+
+climate_graph_development
+
+climate_graph_trophic <- ggplot(climate, aes(x = species, y = density)) +
+  geom_col() + 
+  facet_wrap(~trophic) +
+  theme_light()
+
+climate_graph_trophic
+
+```
+***
+
+#2. Nuclear Power Plant
+
+Second, El Diablo nuclear power plant is up for a renewal of its operating permit. One issue of concern is
+whether the plant has been altering the marine community near its discharge point (Diablo Cove). A monitoring
+program, which started ten years before the plant became operational in 2010, followed the abundance of 3
+species of invertebrates at the discharge point and at two sites (Hyperion Bay & Noway Bay) that appeared to
+be at least superficially similar to the discharge point. You now also have ten years of monitoring data from the
+sites after the plant became operational. Are there any detectable impacts of the plant on these species? Which
+site(s) did you use as a control? Why?
+```{r nuclear power data}
+#diablo is the operating location
+#became operational in 2010
+#3 species
+
+#create datasets for each species
+
+nuclear_a <- nuclear %>% 
+  filter(species == "A") 
+
+nuclear_b <- nuclear %>% 
+  filter(species == "B")
+
+nuclear_c <- nuclear %>% 
+  filter(species == "C")
+
+```
+
+```{r nuclear power graph}
+#Species A
+nuclear_a <- nuclear_a %>% 
+  group_by(location)
+
+nuc_a_graph <- ggplot(nuclear_a, aes(x = year, y = density)) +
+  geom_line(aes(color = location), size = 1) +
+  theme_light() +
+  scale_color_manual(values=wes_palette(n=3, name="FantasticFox1")) +
+  geom_vline(xintercept = 2010) +
+  geom_smooth(method = "lm", formula = y ~ x, aes(color = location), se = FALSE, size = 0.8)
+
+nuc_a_graph
+
+#Species B
+nuclear_b <- nuclear_b %>% 
+  group_by(location)
+
+nuc_b_graph <- ggplot(nuclear_b, aes(x = year, y = density)) +
+  geom_line(aes(color = location), size = 1) +
+  theme_light() +
+  scale_color_manual(values=wes_palette(n=3, name="FantasticFox1")) +
+  geom_vline(xintercept = 2010) +
+  geom_smooth(method = "lm", formula = y ~ x, aes(color = location), se = FALSE, size = 0.8)
+
+nuc_b_graph
+
+#Species C
+nuclear_c <- nuclear_c %>% 
+  group_by(location)
+
+nuc_c_graph <- ggplot(nuclear_c, aes(x = year, y = density)) +
+  geom_line(aes(color = location), size = 1) +
+  theme_light() +
+  scale_color_manual(values=wes_palette(n=3, name="FantasticFox1")) +
+  geom_vline(xintercept = 2010) +
+  geom_smooth(method = "lm", formula = y ~ x, aes(color = location), se = FALSE, size = 0.8)
+
+nuc_c_graph
+```
+ 
+ - there is no discernable trend for pre-2010 and post-2010 for Species A
+ - there is no discernable trend for pre-2010 and post-2010 for Species B
+ - there appears be a slightly greater increase for Species C post-2010 relative to the control
+ 
+ - Hyperion should serve as the control, relative to noway, as noway is highly variable and hyperion densities are closely aligned to diablo densities pre-2010
+
+***
+
+#3. Fisheries and Invasive Species
+
+Finally, you have been asked to make recommendations regarding 2 key species of interest. One species is a
+crab (Cancer cancer). There is a great deal of interest in developing fisheries for Cancer cancer in both
+Oregon and California. The other species is a barnacle (Barnacle bill). Barnacle bill invaded the US West
+Coast possibly from Japan earlier in the century. It has become a nuisance species and regularly fouls pipes,
+ships etc. There is a great deal of interest in learning more about the dynamics of this species in an effort to
+eliminate it.
+
+Your job is to coordinate the new crab fishery for the West Coast of the US. In an attempt to regulate this new
+fishery more effectively, you recall that variation in the recruitment rate (i.e., the # of new individuals settling
+into the population) is one big problem in designing an effective management program. The traditional approach of looking for a simple relationship between the recruitment of young and the existing # of
+reproductive adults has failed repeatedly, and you want to explore new approaches. You realize that the
+problem lies in figuring out what factors cause the variable recruitment of young. You realize also that this
+information would be useful to understand the dynamics of the barnacle in an effort to eliminate it. You request
+all available data on the recruitment of both species from the past 20 years for both Northern California and
+Oregon.
+
+You quickly realize that the # of recruits varies dramatically in both species. This widespread recruitment
+variation in both species is problematic. If you don't know how many new crabs will enter the population, you
+cannot effectively determine the # of adults to harvest. Unless you can unravel the causes, you will not be able
+to effectively manage the new fishery or understand the population dynamics of the barnacle. You posit that the
+most likely limitations of prior attempts to predict recruitment solely on the basis of the # of adults are:
+
+1) the predictions ignore the fact that the species have open populations (i.e., they have large scale larval
+dispersal so that recruits may come from somewhere else),
+2) the predictions ignore environmental variation affecting adults (e.g., food supply, predators), and
+3) the predictions ignore environmental variation affecting the success of larvae during their development
+(e.g., food supply, temperature, and predator abundances).
+
+To rectify these limitations, you ask for all available information on the stock size of adults and on patterns of
+environmental variation.
+
+Remember: if there is a stock-recruitment relationship, the stock size (the # of adults) in one year affects
+the recruitment rate in the next year (i.e., the recruits in 2004 come from adults censused in 2003).
+
+• Cancer cancer larvae live approximately 3 weeks before settling, whereas Barnacle bill larvae live only 10
+days. Both species spawn in the spring.
+Key Point: At this time of year, the currents run from north to south along the shore.
+
+• Barnacle bill are immobile and filter phytoplankton from the water. Cancer cancer are scavengers and eat
+detritus that settles onto the seafloor form the overlying water.
+
+To get information on food availability, you only have upwelling indices. Upwelling is an important coastal
+process that brings nutrients up to the surface. The added nutrients generate blooms of phytoplankton. The rate
+of upwelling is measured by an index that can be positive or negative. Large positive values imply strong
+upwelling (and abundant nutrients and phytoplankton). Negative values imply downwelling (and low nutrients
+and rare phytoplankton). You obtain values for the summer, when juveniles are developing and for the winter,
+when adults are producing new eggs. Remember, values affecting adults are for different years than values
+affecting larvae.
+
+What patterns do you see in the recruitment of these species at these two sites relative to these other variables?
+Try plotting the recruitment data against the other variables that might be able to explain them. Use a
+scatterplot. Look for patterns (e.g., straight lines or smooth curves) that imply there is a relationship between
+the variable and the pattern of recruitment. In your write-up, only include plots of the patterns that you find.
+You don't need to document the patterns that are not there.
+```{r}
+#going to graph scatter plots comparing different variables on x and y axes
+
+#adult vs. recruit crab california
+crab_1 <- ggplot(crab, aes(x = crab_ca_rec, y = crab_ca_ad)) +
+  geom_point() +
+  theme_light()
+
+crab_1
+#no pattern
+
+#adult vs. recruit crab oregon
+crab_2 <- ggplot(crab, aes(x = crab_or_rec, y = crab_or_ad)) +
+  geom_point() +
+  theme_light() +
+  geom_smooth(method = "lm", formula = y~x, se = FALSE, size = 0.5)
+
+crab_2
+#no pattern
+
+#adult ca vs. recruit or crab
+crab_3 <- ggplot(crab, aes(x = crab_or_rec, y = crab_ca_ad)) +
+  geom_point() +
+  theme_light()
+
+crab_3
+
+
+```
+
+
+
+ 

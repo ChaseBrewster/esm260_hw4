@@ -1,0 +1,388 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={ESM 260: Applied Marine Ecology},
+            pdfauthor={Chase Brewster},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{ESM 260: Applied Marine Ecology}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \subtitle{Problem Set 4}
+  \author{Chase Brewster}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{3/03/2020}
+
+\usepackage{setspace}
+
+\doublespacing
+\usepackage{fontspec}
+\setmainfont{Calibri Light}
+
+\begin{document}
+\maketitle
+
+\#Load Packages \& Read in Data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(wesanderson)}
+
+\NormalTok{climate <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"climate.csv"}\NormalTok{)}
+\NormalTok{crab <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"crab.csv"}\NormalTok{)}
+\NormalTok{nuclear <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"nuclear.csv"}\NormalTok{)}
+\NormalTok{upwell <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{"upwell.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\#1. Climate Change
+
+First, there is growing pressure in Congress to relax environmental
+regulations affecting carbon dioxide emissions. You have been asked to
+provide evidence for changes in marine communities that may be due to
+climatic changes, such as increases in temperature. Your have data from
+a coastal site in Northern California that had been previously surveyed
+in 1955. During the ensuing 65 years there have been substantial changes
+in the abundances of several species. To help interpret the changes, you
+can look at the following information for all species: 1) the mode of
+development (i.e., planktonic larvae vs.~non-planktonic larvae), 2) the
+geographic range (i.e., does the species range occur primarily North or
+South of the site, or is it Cosmopolitan - both north and south), and 3)
+the trophic level (i.e., predator, filter feeder, scavenger). What are
+the patterns of change? Try grouping the species by categories and see
+if anything emerges.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{##going to start by filtering for different qualities of the species and see if anything emerges}
+
+\NormalTok{climate_explore <-}\StringTok{ }\NormalTok{climate }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(trophic }\OperatorTok{==}\StringTok{ "scavenger"}\NormalTok{)}
+
+\CommentTok{##going to run a linear model to see if any species category is significant}
+
+\NormalTok{climate_lm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(density }\OperatorTok{~}\StringTok{ }\NormalTok{development}\OperatorTok{+}\NormalTok{range}\OperatorTok{+}\NormalTok{trophic, }\DataTypeTok{data =}\NormalTok{ climate)}
+
+\KeywordTok{summary}\NormalTok{(climate_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = density ~ development + range + trophic, data = climate)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -48.52 -17.65   0.08  13.74  57.41 
+## 
+## Coefficients:
+##                       Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)             12.611     14.973   0.842 0.413791    
+## developmentplanktonic   20.268     15.523   1.306 0.212713    
+## rangeNorthern          -91.284     19.617  -4.653 0.000373 ***
+## rangeSouthern           56.446     18.338   3.078 0.008181 ** 
+## trophicpredator         -2.011     17.221  -0.117 0.908714    
+## trophicscavenger       -23.802     18.378  -1.295 0.216234    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 31.61 on 14 degrees of freedom
+## Multiple R-squared:  0.8093, Adjusted R-squared:  0.7412 
+## F-statistic: 11.88 on 5 and 14 DF,  p-value: 0.0001241
+\end{verbatim}
+
+\begin{itemize}
+\item
+  there does not seem to be any patterns in planktonic
+  vs.~non-planktonic
+\item
+  Northern species have all decreased in density (significant)
+\item
+  Southern species have all increased in density (significant)
+\item
+  there is no pattern for cosmopolitan
+\item
+  there does not seem to be a pattern for predators
+\item
+  there does not seem to be a pattern for filter feeders
+\item
+  there does not seem to be a pattern for scavengers (all but 1
+  increase, but they are all southern \& cosmo)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{##Now going to make graphs for each species category}
+
+\NormalTok{climate_graph_range <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(climate, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ species, }\DataTypeTok{y =}\NormalTok{ density)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_col}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{range) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_light}\NormalTok{()}
+
+\NormalTok{climate_graph_range}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw4_files/figure-latex/climate change graph-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{climate_graph_development <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(climate, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ species, }\DataTypeTok{y =}\NormalTok{ density)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_col}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{development) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_light}\NormalTok{()}
+
+\NormalTok{climate_graph_development}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw4_files/figure-latex/climate change graph-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{climate_graph_trophic <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(climate, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ species, }\DataTypeTok{y =}\NormalTok{ density)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_col}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{trophic) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_light}\NormalTok{()}
+
+\NormalTok{climate_graph_trophic}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw4_files/figure-latex/climate change graph-3.pdf} ***
+
+\#2. Nuclear Power Plant
+
+Second, El Diablo nuclear power plant is up for a renewal of its
+operating permit. One issue of concern is whether the plant has been
+altering the marine community near its discharge point (Diablo Cove). A
+monitoring program, which started ten years before the plant became
+operational in 2010, followed the abundance of 3 species of
+invertebrates at the discharge point and at two sites (Hyperion Bay \&
+Noway Bay) that appeared to be at least superficially similar to the
+discharge point. You now also have ten years of monitoring data from the
+sites after the plant became operational. Are there any detectable
+impacts of the plant on these species? Which site(s) did you use as a
+control? Why?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#diablo is the operating location}
+\CommentTok{#became operational in 2010}
+\CommentTok{#3 species}
+
+\CommentTok{#create datasets for each species}
+
+\NormalTok{nuclear_a <-}\StringTok{ }\NormalTok{nuclear }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(species }\OperatorTok{==}\StringTok{ "A"}\NormalTok{) }
+
+\NormalTok{nuclear_b <-}\StringTok{ }\NormalTok{nuclear }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(species }\OperatorTok{==}\StringTok{ "B"}\NormalTok{)}
+
+\NormalTok{nuclear_c <-}\StringTok{ }\NormalTok{nuclear }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{filter}\NormalTok{(species }\OperatorTok{==}\StringTok{ "C"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Species A}
+\NormalTok{nuclear_a <-}\StringTok{ }\NormalTok{nuclear_a }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(location)}
+
+\NormalTok{nuc_a_graph <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(nuclear_a, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ year, }\DataTypeTok{y =}\NormalTok{ density)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ location), }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_light}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{wes_palette}\NormalTok{(}\DataTypeTok{n=}\DecValTok{3}\NormalTok{, }\DataTypeTok{name=}\StringTok{"FantasticFox1"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{2010}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ location), }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{size =} \FloatTok{0.8}\NormalTok{)}
+
+\NormalTok{nuc_a_graph}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw4_files/figure-latex/nuclear power graph-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Species B}
+\NormalTok{nuclear_b <-}\StringTok{ }\NormalTok{nuclear_b }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(location)}
+
+\NormalTok{nuc_b_graph <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(nuclear_b, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ year, }\DataTypeTok{y =}\NormalTok{ density)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ location), }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_light}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{wes_palette}\NormalTok{(}\DataTypeTok{n=}\DecValTok{3}\NormalTok{, }\DataTypeTok{name=}\StringTok{"FantasticFox1"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{2010}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ location), }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{size =} \FloatTok{0.8}\NormalTok{)}
+
+\NormalTok{nuc_b_graph}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw4_files/figure-latex/nuclear power graph-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Species C}
+\NormalTok{nuclear_c <-}\StringTok{ }\NormalTok{nuclear_c }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(location)}
+
+\NormalTok{nuc_c_graph <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(nuclear_c, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ year, }\DataTypeTok{y =}\NormalTok{ density)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ location), }\DataTypeTok{size =} \DecValTok{1}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme_light}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values=}\KeywordTok{wes_palette}\NormalTok{(}\DataTypeTok{n=}\DecValTok{3}\NormalTok{, }\DataTypeTok{name=}\StringTok{"FantasticFox1"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_vline}\NormalTok{(}\DataTypeTok{xintercept =} \DecValTok{2010}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =} \StringTok{"lm"}\NormalTok{, }\DataTypeTok{formula =}\NormalTok{ y }\OperatorTok{~}\StringTok{ }\NormalTok{x, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ location), }\DataTypeTok{se =} \OtherTok{FALSE}\NormalTok{, }\DataTypeTok{size =} \FloatTok{0.8}\NormalTok{)}
+
+\NormalTok{nuc_c_graph}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw4_files/figure-latex/nuclear power graph-3.pdf}
+
+\begin{itemize}
+\item
+  there is no discernable trend for pre-2010 and post-2010 for Species A
+\item
+  there is no discernable trend for pre-2010 and post-2010 for Species B
+\item
+  there appears be a slightly greater increase for Species C post-2010
+  relative to the control
+\item
+  Hyperion should serve as the control, relative to noway, as noway is
+  highly variable and hyperion densities are closely aligned to diablo
+  densities pre-2010
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\#3. Fisheries and Invasive Species
+
+Finally, you have been asked to make recommendations regarding 2 key
+species of interest. One species is a crab (Cancer cancer). There is a
+great deal of interest in developing fisheries for Cancer cancer in both
+Oregon and California. The other species is a barnacle (Barnacle bill).
+Barnacle bill invaded the US West Coast possibly from Japan earlier in
+the century. It has become a nuisance species and regularly fouls pipes,
+ships etc. There is a great deal of interest in learning more about the
+dynamics of this species in an effort to eliminate it.
+
+
+\end{document}
